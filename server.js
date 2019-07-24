@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const expect = require('chai').expect;
 const cors = require('cors');
 const helmet = require('helmet');
 

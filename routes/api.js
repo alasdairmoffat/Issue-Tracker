@@ -8,7 +8,6 @@
 
 /* eslint-disable camelcase */
 
-const { expect } = require('chai');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
