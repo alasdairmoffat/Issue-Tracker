@@ -16,7 +16,11 @@ dotenv.config();
 const CONNECTION_STRING = process.env.MONGO_URI;
 
 mongoose
-  .connect(CONNECTION_STRING, { useNewUrlParser: true, useFindAndModify: false })
+  .connect(CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
   .then(console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
@@ -73,7 +77,11 @@ module.exports = (app) => {
       const Issue = mongoose.model(project, issueSchema);
 
       const {
-        issue_title, issue_text, created_by, assigned_to, status_text,
+        issue_title,
+        issue_text,
+        created_by,
+        assigned_to,
+        status_text,
       } = req.body;
 
       if (!(issue_title && issue_text && created_by)) {
@@ -103,7 +111,13 @@ module.exports = (app) => {
       const Issue = mongoose.model(project, issueSchema);
 
       const {
-        _id, issue_title, issue_text, created_by, assigned_to, status_text, open,
+        _id,
+        issue_title,
+        issue_text,
+        created_by,
+        assigned_to,
+        status_text,
+        open,
       } = req.body;
 
       const dataToUpdate = { updated_on: Date.now(), open };
@@ -116,17 +130,22 @@ module.exports = (app) => {
       if (Object.keys(dataToUpdate).length < 3 && !open) {
         res.send('no updated field sent');
       } else {
-        Issue.findByIdAndUpdate(_id, dataToUpdate, { new: true }, (err, data) => {
-          if (err) {
-            if (err.kind === 'ObjectId') {
-              res.send(`could not update ${_id}`);
+        Issue.findByIdAndUpdate(
+          _id,
+          dataToUpdate,
+          { new: true },
+          (err, data) => {
+            if (err) {
+              if (err.kind === 'ObjectId') {
+                res.send(`could not update ${_id}`);
+              } else {
+                console.log(err);
+              }
             } else {
-              console.log(err);
+              res.json(data);
             }
-          } else {
-            res.json(data);
-          }
-        });
+          },
+        );
       }
     })
 
