@@ -16,7 +16,7 @@
 
 ## Preview
 
-[Glitch](https://alasdairmoffat-issue-tracker.glitch.me)
+[alasdairmoffat-issue-tracker.glitch.me](https://alasdairmoffat-issue-tracker.glitch.me)
 
 ## General Info
 
